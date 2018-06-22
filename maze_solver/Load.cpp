@@ -112,7 +112,7 @@ sf::Texture Load::generateTexture(const Maze & maze, std::atomic<bool> & running
 	{
 		for (std::size_t j = 0; j < size; j++)
 		{
-			if (maze.getData()[i * size + j] == ' ')
+			if (maze.getData()[i * size + j] == maze.getFloorAndWall().first)
 			{
 				rec.setFillColor(sf::Color::White);
 			}
