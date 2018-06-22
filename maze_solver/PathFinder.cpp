@@ -264,7 +264,7 @@ sf::Texture PathFinder::drawPathTexture(const Maze & maze, Point<int> start, Poi
 {
 	Maze_solver solver{};
 	
-	auto is_sloved = solver.solve(maze.getData(), maze.getSize(), start, end);
+	auto is_sloved = solver.solve(maze.getData(), maze.getSize(), start, end, maze.getFloorAndWall().second);
 
 	if (!is_sloved)
 	{

@@ -6,6 +6,7 @@ class Maze
 {
 public:
 	Maze();
+	Maze(char floor, char wall);
 	Maze(const Maze & maze) = delete;
 	Maze& operator=(const Maze & maze) = delete;
 
@@ -14,10 +15,12 @@ public:
 
 	// Size should be a odd number
 	// Minimal size is 3
-	void makeNewMaze(std::size_t size, std::size_t seed, std::size_t imperfection_factor);
+	bool makeNewMaze(std::size_t size, std::size_t seed, std::size_t imperfection_factor);
+
 	std::size_t getSize() const;
 	const char* getData() const;
 	std::size_t getSeed() const;
+	std::pair<char, char> getFloorAndWall() const;
 
 	~Maze();
 
@@ -34,5 +37,6 @@ private:
 	std::size_t imperfection_factor{ 0 };
 	std::unique_ptr<char[]> map;
 	std::size_t bottom_right_border = 0, top_left_border = 2;
+	char floor{ ' ' }, wall{ '#' };
 };
 

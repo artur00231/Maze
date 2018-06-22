@@ -48,7 +48,7 @@ Maze_solver::Maze_solver()
 {
 }
 
-bool Maze_solver::solve(const char * map, std::size_t map_size, Point<int> start, Point<int> end)
+bool Maze_solver::solve(const char * map, std::size_t map_size, Point<int> start, Point<int> end, char wall)
 {
 	std::priority_queue<Data> queue;
 	std::unordered_set<Point<int>> visited;
@@ -76,25 +76,25 @@ bool Maze_solver::solve(const char * map, std::size_t map_size, Point<int> start
 		visited.insert(current_data.neighbour);
 
 		auto N_point = Point<int>::move(current_data.neighbour, Directions::N);
-		if (map[Point<int>::XY_to_index(N_point, map_size)] != '#' && (!visited.count(N_point)))
+		if (map[Point<int>::XY_to_index(N_point, map_size)] != wall && (!visited.count(N_point)))
 		{
 			queue.push({ (current_data.cost + heuristic(current_data.neighbour, end)), current_data.cost + 1, Point<int>{ current_data.neighbour.getPosition().first, current_data.neighbour.getPosition().second + 1, 1 }, append_and_return(current_data.path, Directions::N) });
 		}
 
 		auto S_point = Point<int>::move(current_data.neighbour, Directions::S);
-		if (map[Point<int>::XY_to_index(S_point, map_size)] != '#' && (!visited.count(S_point)))
+		if (map[Point<int>::XY_to_index(S_point, map_size)] != wall && (!visited.count(S_point)))
 		{
 			queue.push({ (current_data.cost + heuristic(current_data.neighbour, end)), current_data.cost + 1, Point<int>{ current_data.neighbour.getPosition().first, current_data.neighbour.getPosition().second - 1, 1 }, append_and_return(current_data.path, Directions::S) });
 		}
 
 		auto E_point = Point<int>::move(current_data.neighbour, Directions::E);
-		if (map[Point<int>::XY_to_index(E_point, map_size)] != '#' && (!visited.count(E_point)))
+		if (map[Point<int>::XY_to_index(E_point, map_size)] != wall && (!visited.count(E_point)))
 		{
 			queue.push({ (current_data.cost + heuristic(current_data.neighbour, end)), current_data.cost + 1, Point<int>{ current_data.neighbour.getPosition().first + 1, current_data.neighbour.getPosition().second, 1 }, append_and_return(current_data.path, Directions::E) });
 		}
 
 		auto W_point = Point<int>::move(current_data.neighbour, Directions::W);
-		if (map[Point<int>::XY_to_index(W_point, map_size)] != '#' && (!visited.count(W_point)))
+		if (map[Point<int>::XY_to_index(W_point, map_size)] != wall && (!visited.count(W_point)))
 		{
 			queue.push({ (current_data.cost + heuristic(current_data.neighbour, end)), current_data.cost + 1, Point<int>{ current_data.neighbour.getPosition().first - 1, current_data.neighbour.getPosition().second, 1 }, append_and_return(current_data.path, Directions::W) });
 		}
